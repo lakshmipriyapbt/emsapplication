@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ems_ui:
+    image: ems_ui:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - ems_network
+
+  ems_identity:
+    image: ems_identity:latest
+    ports:
+      - "9090:9090"
+    networks:
+      - ems_network
+
+  ems_employee:
+    image: ems_employee:latest
+    ports:
+      - "8090:8090"
+    networks:
+      - ems_network
+
+networks:
+  ems_network:
+    driver: bridge
+
