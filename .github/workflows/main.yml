@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
 
-     - name: Ensure gradlew is executable
+     - name: Ensure gradlew is executable for employee
         run: chmod +x ./employee/gradlew  # Adjust the path if necessary
 
 
