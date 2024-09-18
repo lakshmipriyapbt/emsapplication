@@ -30,9 +30,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+   - name: Ensure gradlew is executable
+       run: chmod +x ./employee/gradlew  # Adjust the path if necessary
+
       - name: Build Employee Module
         working-directory: ./employee  # Adjust if necessary
         run: ./gradlew build
+
+    - name: Ensure gradlew is executable for Identity
+       run: chmod +x ./identity/gradlew  # Adjust the path if necessary
+
 
       - name: Build Identity Module
         working-directory: ./identity
