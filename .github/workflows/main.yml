@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch if necessary
+  pull_request:
+    branches:
+      - main  # Runs on PRs targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 'openjdk 17.0.12'  # Specify your Java version
+          distribution: 'adopt'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Employee Module
+        working-directory: ./employee  # Adjust if necessary
+        run: ./gradlew build
+
+      - name: Build Identity Module
+        working-directory: ./identity
+        run: ./gradlew build
+
+      - name: Build UI Module
+        working-directory: ./ui
+        run: npm install && npm test
